@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Event Tracker</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: sans-serif; background: #111; color: #fff; padding: 20px; }
+        .event { background: #222; padding: 15px; margin-bottom: 10px; border-left: 4px solid red; }
+    </style>
+</head>
+<body>
+    <h1>Verified Mobilizations</h1>
+    <div id="feed">Loading...</div>
+    <script>
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                const feed = document.getElementById('feed');
+                feed.innerHTML = '';
+                data.reverse().forEach(event => {
+                    feed.innerHTML += `
+                        <div class="event">
+                            <h2>${event.province} - ${event.topic}</h2>
+                            <p><strong>Date & Time:</strong> ${event.date} | ${event.time}</p>
+                            <p><strong>Location:</strong> ${event.location}</p>
+                            <a href="${event.source_url}" target="_blank" style="color: #ff4444;">Source Link</a>
+                        </div>
+                    `;
+                });
+            });
+    </script>
+</body>
+</html>
